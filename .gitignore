@@ -1,0 +1,37 @@
+*
+!/.github/
+!/.github/**
+!/README.md
+!/MANIFEST.in
+!/pyproject.toml
+!/requirements.txt
+!/setup.py
+!/sited_test_py/
+!/sited_test_py/files/
+!/sited_test_py/lib/
+!/sited_test_py/lib/*.js
+!/sited_test_py/lib/*.py
+!/sited_test_py/__init__.py
+!/sited_test_py/bin.py
+!/sited_test_py/conf.py
+!/sited_test_py/demo.py
+!/sited_test_py/demo.sited.xml
+
+# keep it under each dir
+!.gitignore
+!CHANGELOG.md
+!LICENSE
+!README_CN.*
+!README_EN.*
+# ignore it under each dir
+.DS_Store
+__pycache__
+*.pyc
+*.egg
+*.egg-info
+# ignore it under this dir
+/dist
+/build
+/CHANGELOG.md
+
+# notice: MANIFEST.in contorls file adding for sdist. Setup.py[packages package_data] contorls file adding for bdist_wheel,and must set include_package_data=False
