@@ -3,7 +3,7 @@
 Author:wistn
 since:2021-03-03
 LastEditors:Do not edit
-LastEditTime:2021-03-04
+LastEditTime:2021-04-04
 Description:
 """
 import json
@@ -115,7 +115,7 @@ class ONodeBase:
 
 class ONode(ONodeBase):
     def __init__(self, *arguments):
-        super().__init__(arguments)
+        super().__init__()
         self._unescape = False
         len = arguments.__len__()
         if len == 0:
