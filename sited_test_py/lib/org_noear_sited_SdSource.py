@@ -3,7 +3,7 @@
 Author:wistn
 since:2020-09-11 18:44:30
 LastEditors:Do not edit
-LastEditTime:2021-03-04
+LastEditTime:2021-04-13
 Description:
 """
 import asyncio
@@ -44,9 +44,9 @@ class SdSource:
 
     # --------------------------------
     async def __new__(cls, app, xml):
-        asyncInstanceFromLowest = super().__new__(cls)
-        await asyncInstanceFromLowest.__init__(app, xml)
-        return asyncInstanceFromLowest
+        asyncInstance = object.__new__(cls)
+        await asyncInstance.__init__(app, xml)
+        return asyncInstance
 
     async def __init__(self, app, xml):
         self.attrs = SdAttributeList()
@@ -68,12 +68,12 @@ class SdSource:
         self.xmlBodyName = None
         self.xmlHeadName = None
         self.xmlScriptName = None
-        if self.__class__.__name__ == "SdSource":
+        if self.__class__ == SdSource:
             self.doInit(app, xml)
         self.xmlHeadName = "head"
         self.xmlBodyName = "body"
         self.xmlScriptName = "script"
-        if self.__class__.__name__ == "SdSource":
+        if self.__class__ == SdSource:
             await self.doLoad(app)
 
     def doInit(self, app, xml):

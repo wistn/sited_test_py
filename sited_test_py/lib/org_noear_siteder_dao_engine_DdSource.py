@@ -3,7 +3,7 @@
 Author:wistn
 since:2020-05-25
 LastEditors:Do not edit
-LastEditTime:2020-10-06
+LastEditTime:2021-04-13
 Description:
 """
 import traceback
@@ -52,8 +52,9 @@ class DdSource(SdSource):
         return self._cover.nodeMatch(url)
 
     async def __new__(cls, app, xml):
-        instanceFromLowest = await super().__new__(cls, app, xml)
-        return instanceFromLowest
+        asyncInstance = object.__new__(cls)
+        await asyncInstance.__init__(app, xml)
+        return asyncInstance
 
     async def __init__(self, app, xml):
         #    public String sited

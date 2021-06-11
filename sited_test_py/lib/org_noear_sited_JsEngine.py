@@ -3,7 +3,7 @@
 Author:wistn
 since:2020-05-24
 LastEditors:Do not edit
-LastEditTime:2021-02-27
+LastEditTime:2021-04-22
 Description:
 """
 import traceback
@@ -151,11 +151,11 @@ class JsEngine:
 enhanceObj = r"""
 function enhanceObj() {
     'use strict';
-    var backslashN = '\n';
     function pretty(obj, space) {
+        if (space == null) space = 4;
+        var backslashN = '\n';
         var indent = '',
             subIndents = '';
-        if (space == null) space = 4;
         if (typeof space == 'number') {
             for (var i = 0; i < space; i++) {
                 indent += ' ';
@@ -165,9 +165,7 @@ function enhanceObj() {
         }
         function str(obj) {
             var jsType = Object.prototype.toString.call(obj);
-            if (
-                jsType.match(/object (String|Date|Function|JSON|Math|RegExp)/)
-            ) {
+            if (jsType.match(/object (String|Date|Function|JSON|Math|RegExp)/)) {
                 return JSON.stringify(String(obj));
             } else if (jsType.match(/object (Number|Boolean|Null)/)) {
                 return JSON.stringify(obj);
@@ -176,7 +174,7 @@ function enhanceObj() {
             } else {
                 if (jsType.match(/object (Array|Arguments|Map|Set)/)) {
                     if (jsType.match(/object (Map|Set)/)) {
-                        /* es6新增的方法和参数类型 */
+                        // function and type in js es6 or above
                         obj = Array.from(obj);
                     }
                     var partial = [];
@@ -190,12 +188,12 @@ function enhanceObj() {
                             ? '[]'
                             : indent.length
                             ? '[' +
-                              backslashN +
-                              subIndents +
-                              partial.join(',' + backslashN + subIndents) +
-                              backslashN +
-                              subIndents.slice(indent.length) +
-                              ']'
+                            backslashN +
+                            subIndents +
+                            partial.join(',' + backslashN + subIndents) +
+                            backslashN +
+                            subIndents.slice(indent.length) +
+                            ']'
                             : '[' + partial.join(',') + ']';
                     subIndents = subIndents.slice(indent.length);
                     return result;
@@ -208,7 +206,8 @@ function enhanceObj() {
                     var partial = [];
                     subIndents = subIndents + indent;
                     var ownProps = Object.getOwnPropertyNames(obj);
-                    /* Object.keys 为自身非继承属性(不用for in因为for遍历继承的祖先属性)，Object.getOwnPropertyNames 在前者基础上包括不可枚举属性  */
+                    // Object.keys returns obj's own enumerable property names(no use for...in loop because including inherited enumerable properties from obj's prototype chain
+                    // Object.getOwnPropertyNames = Object.keys + obj's own non-enumerable property names
                     var len = ownProps.length;
                     for (var i = 0; i < len; i++) {
                         partial.push(
@@ -222,12 +221,12 @@ function enhanceObj() {
                             ? '{}'
                             : indent.length
                             ? '{' +
-                              backslashN +
-                              subIndents +
-                              partial.join(',' + backslashN + subIndents) +
-                              backslashN +
-                              subIndents.slice(indent.length) +
-                              '}'
+                            backslashN +
+                            subIndents +
+                            partial.join(',' + backslashN + subIndents) +
+                            backslashN +
+                            subIndents.slice(indent.length) +
+                            '}'
                             : '{' + partial.join(',') + '}';
                     subIndents = subIndents.slice(indent.length);
                     return result;
@@ -237,7 +236,7 @@ function enhanceObj() {
             }
         }
         function decycle(obj) {
-            /* the function can solve circular structure like JSON.decycle, the return value can be decoded by JSON.retrocycle(JSON.parse()) */
+            // the function can solve circular structure like JSON.decycle, the return value can be decoded by JSON.retrocycle(JSON.parse())
             var arrParents = [];
             return (function derez(obj, path) {
                 var jsType = Object.prototype.toString.call(obj);
@@ -251,7 +250,7 @@ function enhanceObj() {
                     if (jsType.match(/object (Array|Arguments|Map|Set)/)) {
                         var len = arrParents.length;
                         for (var i = 0; i < len; i++) {
-                            /* arr like [obj, '$'] */
+                            // arr like [obj, '$']
                             var arr = arrParents[i];
                             if (obj === arr[0]) {
                                 return { $ref: arr[1] };
@@ -260,7 +259,7 @@ function enhanceObj() {
                         arrParents.push([obj, path]);
                         var newObj = [];
                         if (jsType.match(/object (Map|Set)/)) {
-                            /* es6新增的方法和参数类型 */
+                            // function and type in js es6 or above
                             obj = Array.from(obj);
                         }
                         var length = obj.length;
@@ -271,7 +270,7 @@ function enhanceObj() {
                     } else {
                         var len = arrParents.length;
                         for (var i = 0; i < len; i++) {
-                            /* arr like [obj, '$'] */
+                            // arr like [obj, '$']
                             var arr = arrParents[i];
                             if (obj === arr[0]) {
                                 return { $ref: arr[1] };

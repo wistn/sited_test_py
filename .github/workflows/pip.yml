@@ -76,4 +76,5 @@ jobs:
               run: |
                   twine upload --username __token__ --password ${{ secrets.PYPI_TOKEN }} dist/*.whl #--verbose
                   twine upload --username __token__ --password ${{ secrets.PYPI_TOKEN }} dist/*.zip #--verbose
+
 # upload zip/gztar at last in case it failure, and only can upload one format of sdist so choose *.zip
