@@ -3,29 +3,31 @@
 Author:wistn
 since:2020-10-17
 LastEditors:Do not edit
-LastEditTime:2021-03-14
+LastEditTime:2021-07-02
 Description:
 """
 import json
 from datetime import datetime
 from .conf import __version__
-from .lib.org_noear_siteder_App import App
-from .lib.org_noear_siteder_dao_engine_DdSource import DdSource
-from .lib.org_noear_siteder_viewModels_site_MainViewModel import MainViewModel
-from .lib.org_noear_siteder_viewModels_site_SearchViewModel import SearchViewModel
-from .lib.org_noear_siteder_viewModels_site_TagViewModel import TagViewModel
-from .lib.org_noear_siteder_viewModels_site_BookViewModel import BookViewModel
-from .lib.org_noear_siteder_viewModels_site_Book4ViewModel import Book4ViewModel
-from .lib.org_noear_siteder_viewModels_site_Book5ViewModel import Book5ViewModel
-from .lib.org_noear_siteder_viewModels_site_Book6ViewModel import Book6ViewModel
-from .lib.org_noear_siteder_viewModels_site_Book7ViewModel import Book7ViewModel
-from .lib.org_noear_siteder_viewModels_site_Book8ViewModel import Book8ViewModel
-from .lib.org_noear_siteder_viewModels_site_Section1ViewModel import Section1ViewModel
-from .lib.org_noear_siteder_viewModels_site_Section2ViewModel import Section2ViewModel
-from .lib.org_noear_siteder_viewModels_site_Section3ViewModel import Section3ViewModel
-from .lib.org_noear_siteder_models_SectionModel import SectionModel
-from .lib.org_noear_siteder_dao_db_BookNode import BookNode
-from .lib.org_noear_siteder_utils_LogWriter import LogWriter
+from sited_py import (
+    App,
+    DdSource,
+    MainViewModel,
+    SearchViewModel,
+    TagViewModel,
+    BookViewModel,
+    Book4ViewModel,
+    Book5ViewModel,
+    Book6ViewModel,
+    Book7ViewModel,
+    Book8ViewModel,
+    Section1ViewModel,
+    Section2ViewModel,
+    Section3ViewModel,
+    SectionModel,
+    BookNode,
+    LogWriter,
+)  # 该文件里面有配置
 
 
 async def sited_test(sitedPath, key, callback):
@@ -36,7 +38,7 @@ async def sited_test(sitedPath, key, callback):
     source = await DdSource(App.getCurrent(), sited)
     print(
         datetime.now().strftime("%I:%M:%S %p")
-        + " 开始测试插件 "
+        + " 开始运行插件 "
         + source.title
         + ".v"
         + str(source.ver)
@@ -52,7 +54,7 @@ async def sited_test(sitedPath, key, callback):
 
     async def home_test(cback):
         print(
-            "插件首面可测试"
+            "插件首面可运行"
             + ("hots " if source.hots.name else "")
             + ("updates " if source.updates.name else "")
             + ("tags " if source.tags.name else "")

@@ -1,6 +1,6 @@
 # sited_test_py
 
-SiteD Engine for Python version, SiteD plugin testing tool, for SiteD developers testing their own plugins on computer/desktop platform.
+SiteD plugin testing tool for Python version, for SiteD developers testing their own plugins on computer/desktop platform.
 
 [ [中文说明](README_CN.md)]
 
@@ -9,6 +9,7 @@ SiteD Engine for Python version, SiteD plugin testing tool, for SiteD developers
 ## Features
 
 -   To automatically test SiteD plugin on Windows x86/Windows x64/Linux/macOS
+-   Need [sited_py](https://github.com/wistn/sited_py) below:
 -   Support `schema0/1/2`
 -   Support running `buildUrl`, `parseUrl(CALL::)`, `parse(get/post/@null)`, `require(include online js library)`
 -   Support `header(cookie/referer)`, `ua` configurations
@@ -23,7 +24,7 @@ SiteD Engine for Python version, SiteD plugin testing tool, for SiteD developers
 * Outputs nodes' data to console on Python.
 * @param sitedPath: A string of .sited or .sited.xml file's path, advises to absolute path.
 * @param key: A keyword string that is used for searching on search node.
-* @param callback: Outputs the entrance test functions of home/search/book node.
+* @param callback: Outputs the entrance test functions of home/search/book node etc.
 * @param nodeName@doTest@home_test: The string "hots", "updates" or "tags", which starts test function of hots/updates/tags node.
 * @param bookUrl@book_test: Url argument of book node function, for test of book node alone.
 """
@@ -48,7 +49,7 @@ sited_test(
 
 ---
 
-### [ [Features](#Features)|[ API ](#API)|[Usage](#Usage)|[Configuration](#Configuration)|[Dependencies](#Dependencies)|[Todo](#Todo)|[SpecialThanks](#SpecialThanks)|[Links](#Links)|[CHANGELOG.md](CHANGELOG.md)]
+### [ [Features](#Features)|[ API ](#API)|[Usage](#Usage)|[Configuration](#Configuration)|[Dependencies](#Dependencies)|[Links](#Links)|[CHANGELOG.md](CHANGELOG.md)]
 
 ## Usage
 
@@ -69,7 +70,7 @@ from sited_test_py import sited_test, LogWriter
 sitedPath = os.path.join(
     os.path.dirname(os.path.realpath(__file__)), "demo.sited.xml"
 )
-key = "we"
+key = "我们"
 async def callback(home_test, search_test, book_test, *args):
     async def cb(*args):pass
 
@@ -119,7 +120,7 @@ or C. By the way, using [Code Runner extension](https://marketplace.visualstudio
 
 a. You can start Code Runner when editor focuses sited plugin file, after configuring Code Runner to execute .sited and .sited.xml as python command below, test the plugin directly, need not to write the plugin path, it will be identified by \$fullFileName.
 
-```json
+```jsonc
 "code-runner.executorMapByGlob": {
     "*.{sited,sited.xml}": "python /path/to/site-packages/sited_test_py/bin.py $fullFileName key"
 }
@@ -128,16 +129,19 @@ a. You can start Code Runner when editor focuses sited plugin file, after config
 
 or b. You can start debugging (sited_test_py) when editor focuses sited plugin file, after adding a debug configure to execute as python command below, test the plugin directly, need not to write the plugin path, it will be identified by \${file}.
 
-```json
+```jsonc
 "launch": {
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "sited_test_py",
             "type": "python",
             "request": "launch",
-            "name": "sited_test_py",
+            // "cwd": "${fileDirname}",
             "program": "/path/to/site-packages/sited_test_py/bin.py",
-            "args": ["${file}", "searchword"]
+            "args": ["${file}", "searchword"],
+            // "stopOnEntry": true,
+            "console": "internalConsole" // internalConsole integratedTerminal
         }
     ]
 }
@@ -149,27 +153,15 @@ replace /path/to/site-packages/sited_test_py/bin.py with actual bin.py's path. I
 
 ## Configuration
 
--   Configuration which controls making of sited_log.txt/sited_error.txt/sited_print.txt and sited (cache directory) under the 'files' dir beside this README_EN file, see in conf.py file.
-
 ---
 
 ## Dependencies
 
 -   [Python](https://www.python.org/) 3.7 or above, for asyncio.run
 
--   [pyChakraCore](https://github.com/wistn/pyChakraCore) a runtime run SiteD plugin's js code, a python package developed by me
+-   [sited_py](https://github.com/wistn/sited_py) SiteD Engine for Python version
 
 ---
-
-## Todo
-
--   Support login node
-
----
-
-## SpecialThanks
-
-### The 'lib' library(excludes main_res_raw_xx.js) is totally translated from big parts of Noear's open source [SiteD Engine](https://github.com/noear/SiteD) v35 APP JAVA code to Python language by me. Thank you!
 
 ## Links
 
@@ -181,4 +173,4 @@ replace /path/to/site-packages/sited_test_py/bin.py with actual bin.py's path. I
 
 -   [generators-sited-plugin](https://github.com/htynkn/generators-sited-plugin): Yeoman generator for sited plugin.
 
--   [sited_test](https://github.com/wistn/sited_test) SiteD Engine for Node JavaScript version, SiteD plugin testing tool.
+-   [sited_test](https://github.com/wistn/sited_test) SiteD plugin testing tool for Node JavaScript version.

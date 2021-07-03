@@ -4,7 +4,7 @@
 Author:wistn
 since:2020-09-11
 LastEditors:Do not edit
-LastEditTime:2021-03-14
+LastEditTime:2021-06-12
 Description:
 """
 import asyncio
@@ -16,8 +16,8 @@ import getopt
 if __package__ == "" or __package__ == None:
     path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
     sys.path.insert(0, path)
-from sited_test_py import sited_test, LogWriter
-from sited_test_py.conf import __version__  # 该文件里面有配置
+from sited_test_py import sited_test, LogWriter  # 该文件里面有配置
+from sited_test_py.conf import __version__
 
 
 async def noop(*args):

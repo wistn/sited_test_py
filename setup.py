@@ -3,7 +3,7 @@
 Author:wistn
 since:2021-01-20
 LastEditors:Do not edit
-LastEditTime:2021-03-09
+LastEditTime:2021-07-03
 Description:
 """
 from setuptools import setup, find_packages
@@ -70,20 +70,17 @@ PACKAGE_DIR = {"sited_test_py": "sited_test_py"}  # or {"": "."}
 # Set packages to a list of all packages in your project, including their subpackages, sub-subpackages, etc. Although the packages can be listed manually, setuptools.find_packages() finds them automatically. Use the include keyword argument to find only the given packages. Use the exclude keyword argument to omit packages that are not intended to be released and installed.
 PACKAGES = find_packages(where=".", exclude=(), include=("*"))
 # where="src" if structure like src/packageXX
-PACKAGES.append("sited_test_py.files")
 PACKAGE_DATA = {
     "sited_test_py": [
         "__init__.py",
-        "bin.py",
         "conf.py",
+        "bin.py",
         "demo.py",
         "demo.sited.xml",
         "CHANGELOG.md",
         "README_CN.*",
         "README_EN.*",
-    ],
-    "sited_test_py.files": [".gitignore",],
-    "sited_test_py.lib": ["*.py", "*.js"],
+    ]
 }
 EXCLUDE_PACKAGE_DATA = {}
 py_modules = []
@@ -95,11 +92,11 @@ if __name__ == "__main__":
         author="wistn",
         author_email="wistn@qq.com",
         license="Apache Software License",
-        description="SiteD Engine for Python version, SiteD plugin testing tool.",
+        description="SiteD plugin testing tool for Python version.",
         long_description=LONG_DESCRIPTION,
         long_description_content_type="text/markdown",
         url="https://github.com/wistn/sited_test_py",
-        keywords=["plugin", "test", "sited", "ddcat"],
+        keywords=["sited", "plugin", "test", "ddcat"],
         platforms=["Windows", "Linux", " MacOS"],
         classifiers=[_ for _ in CLASSIFIERS.splitlines() if _],
         py_modules=py_modules,
@@ -112,7 +109,7 @@ if __name__ == "__main__":
         data_files=DATA_FILES,
         python_requires=">=3." + str(REQUIRED_PYTHON[1]) + ", <4",
         # “install_requires” should be used to specify what dependencies a project minimally needs to run. When the project is installed by pip, this is the specification that is used to install its dependencies.
-        install_requires=(["aiohttp>=3.7.3", "lxml>=4.5.0", "pyChakraCore>=0.2.0",],),
+        install_requires=(["sited_py>=1.4.1"],),
         entry_points={"console_scripts": ["sited_test_py=sited_test_py.bin:main"]},
     )
     setup(**metadata)

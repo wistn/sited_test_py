@@ -2,7 +2,7 @@
 # Author:wistn
 # since:2021-03-11
 # LastEditors:Do not edit
-# LastEditTime:2021-03-16
+# LastEditTime:2021-07-03
 # Description: github release and Python Package
 #
 
@@ -18,14 +18,14 @@ jobs:
                 include:
                     - os: ubuntu-latest
                       python-version: '3.x'
-                    - os: macos-latest
-                      python-version: '3.x'
-                    - os: windows-latest
-                      architecture: 'x64'
-                      python-version: '3.x'
-                    - os: windows-latest
-                      architecture: 'x86'
-                      python-version: '3.x'
+                    # - os: macos-latest
+                    #   python-version: '3.x'
+                    # - os: windows-latest
+                    #   architecture: 'x64'
+                    #   python-version: '3.x'
+                    # - os: windows-latest
+                    #   architecture: 'x86'
+                    #   python-version: '3.x'
         runs-on: ${{ matrix.os }}
         env:
             PYTHONIOENCODING: utf-8
