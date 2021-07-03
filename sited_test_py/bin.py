@@ -4,7 +4,7 @@
 Author:wistn
 since:2020-09-11
 LastEditors:Do not edit
-LastEditTime:2021-06-12
+LastEditTime:2021-07-03
 Description:
 """
 import asyncio
@@ -56,7 +56,7 @@ async def execute(sitedPath, key, exeCback):
 
 helpMeaasge = """Tests own SiteD plugin on Python
 sitedPath: File path of .sited or .sited.xml.
-key(optional): A keyword string that is used for searching on search node, if not be inputted, built-in keyword of bin.js would be used.
+key(optional): A keyword string that is used for searching on search node, if not be inputted, built-in keyword of bin.py would be used.
 Usage: sited_test_py <sitedPath> [key]
 Usage: sited_test_py [options]
 Options:

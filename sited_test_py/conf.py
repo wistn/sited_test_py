@@ -6,4 +6,4 @@ LastEditors:Do not edit
 LastEditTime:2021-07-03
 Description:
 """
-__version__ = "1.3.1"
+__version__ = "1.3.2"
