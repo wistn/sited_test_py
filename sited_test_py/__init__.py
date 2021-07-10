@@ -3,7 +3,7 @@
 Author:wistn
 since:2020-10-17
 LastEditors:Do not edit
-LastEditTime:2021-07-02
+LastEditTime:2021-07-10
 Description:
 """
 import json
@@ -63,7 +63,7 @@ async def sited_test(sitedPath, key, callback):
 
         async def doTest(nodeName, cb):
             if not source.__dict__[nodeName].name:
-                print(nodeName + "节点不存在")
+                print(nodeName + "节点不在插件里")
                 await cb()
                 return
             nodeList = viewModel.__dict__[nodeName.replace("s", "List")]
@@ -118,7 +118,7 @@ async def sited_test(sitedPath, key, callback):
 
     async def search_test(cb):
         if not source.search.name:
-            print("search节点不存在")
+            print("search节点不在插件里")
             await cb()
             return
         print("\nsearch节点url属性为 " + str(source.search.url.value) + " 搜索关键字为 " + key)
@@ -166,7 +166,7 @@ async def sited_test(sitedPath, key, callback):
 
     async def tag_test(tagUrl, from_where, cb):
         if not source._tag.name:
-            print("tag节点不存在")
+            print("tag节点不在插件里")
             await cb()
             return
         print(
@@ -222,25 +222,32 @@ async def sited_test(sitedPath, key, callback):
         )
 
     async def book_test(bookUrl, from_where, cb):
-        if not source._book.name:
-            print("book节点不存在")
+        if bookUrl.startswith("sited://"):
+            print("结果是用app打开 " + bookUrl)
+            await cb()
+            return
+        if not source.isMatch(bookUrl):
+            print("book节点提示：此内容需要新的插件，现在安装？")
+            print("暂时没有合适的插件")
             await cb()
             return
         config = source.book(bookUrl)
         print(
             "\nbook节点<"
             + from_where
-            + "> "
-            + config.onParse
-            + "(或[若有]buildUrl/parseUrl)参数url为 "
+            + "> parse(或[若有]buildUrl/parseUrl)参数url为 "
             + bookUrl
         )
-        if bookUrl.startswith("sited://") or config.isWebrun():
+        if config.isWebrun():
             print("结果是用app打开 " + config.getWebUrl(bookUrl))
             await cb()
             return
 
         async def doTest():
+            if not source._book.name:
+                print("book节点不在插件里")  # 对应的多多猫提示 网络请求出错///^_^....... R.
+                await cb()
+                return
             print(
                 "\n获取book[dtype="
                 + str(dtype)
@@ -368,25 +375,27 @@ async def sited_test(sitedPath, key, callback):
             )
 
     async def section_test(sectionUrl, from_where, cb):
-        if not source._section.name:
-            print("section节点不存在")
+        if sectionUrl.startswith("sited://"):
+            print("结果是用app打开 " + sectionUrl)
             await cb()
             return
         config = source.section(sectionUrl)
         print(
             "\nsection节点<"
             + from_where
-            + "> "
-            + config.onParse
-            + "(或[若有]buildUrl/parseUrl)参数url为 "
+            + "> parse(或[若有]buildUrl/parseUrl)参数url为 "
             + sectionUrl
         )
-        if sectionUrl.startswith("sited://") or config.isWebrun():
+        if config.isWebrun():
             print("结果是用app打开 " + config.getWebUrl(sectionUrl))
             await cb()
             return
 
         async def doTest():
+            if not source._section.name:
+                print("section节点不在插件里")
+                await cb()
+                return
             print(
                 "\n获取section[dtype="
                 + str(dtype)
@@ -440,7 +449,7 @@ async def sited_test(sitedPath, key, callback):
 
     async def subtag_test(subtagUrl, from_where, cb):
         if not source._subtag.name:
-            print("subtag节点不存在")
+            print("subtag节点不在插件里")
             await cb()
             return
         print(
